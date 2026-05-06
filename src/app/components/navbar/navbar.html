@@ -1,0 +1,115 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <a routerLink="/" class="navbar-logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">MemberHub</span>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <div class="nav-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
+        <span class="nav-icon">🏠</span>
+        หน้าหลัก
+      </a>
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/profile" routerLinkActive="active" class="nav-link">
+          <span class="nav-icon">👤</span>
+          แก้ไขข้อมูล
+        </a>
+      }
+    </div>
+
+    <!-- Auth Section -->
+    <div class="nav-auth">
+      @if (auth.isLoggedIn()) {
+        <div class="user-info">
+          <div class="user-avatar">
+            {{ auth.currentUser()?.name?.charAt(0) }}
+          </div>
+          <span class="user-name">{{ auth.currentUser()?.name }}</span>
+          <button class="btn-logout" (click)="onLogout()">ออกจากระบบ</button>
+        </div>
+      } @else {
+        <button class="btn-login" (click)="openLogin()">เข้าสู่ระบบ</button>
+      }
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-toggle" (click)="toggleMobileMenu()">
+      @if (showMobileMenu()) {
+        ✕
+      } @else {
+        ☰
+      }
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (showMobileMenu()) {
+    <div class="mobile-menu">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="mobile-link" (click)="toggleMobileMenu()">
+        🏠 หน้าหลัก
+      </a>
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/profile" routerLinkActive="active" class="mobile-link" (click)="toggleMobileMenu()">
+          👤 แก้ไขข้อมูล
+        </a>
+        <button class="mobile-logout" (click)="onLogout(); toggleMobileMenu()">ออกจากระบบ</button>
+      } @else {
+        <button class="mobile-login" (click)="openLogin(); toggleMobileMenu()">เข้าสู่ระบบ</button>
+      }
+    </div>
+  }
+</nav>
+
+<!-- Login Modal -->
+@if (showLoginModal()) {
+  <div class="modal-overlay" (click)="closeLogin()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeLogin()">✕</button>
+
+      <div class="modal-header">
+        <div class="modal-icon">🔐</div>
+        <h2>เข้าสู่ระบบ</h2>
+        <p>กรุณากรอกข้อมูลเพื่อเข้าสู่ระบบ</p>
+      </div>
+
+      @if (loginError()) {
+        <div class="error-message">
+          ⚠️ {{ loginError() }}
+        </div>
+      }
+
+      <form (ngSubmit)="onLogin()" class="login-form">
+        <div class="form-group">
+          <label for="login-email">อีเมล</label>
+          <input
+            id="login-email"
+            type="email"
+            placeholder="กรอกอีเมล"
+            [ngModel]="loginEmail()"
+            (ngModelChange)="loginEmail.set($event)"
+            name="email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">รหัสผ่าน</label>
+          <input
+            id="login-password"
+            type="password"
+            placeholder="กรอกรหัสผ่าน"
+            [ngModel]="loginPassword()"
+            (ngModelChange)="loginPassword.set($event)"
+            name="password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-submit">เข้าสู่ระบบ</button>
+      </form>
+    </div>
+  </div>
+}

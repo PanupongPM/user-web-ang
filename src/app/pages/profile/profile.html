@@ -1,0 +1,99 @@
+<div class="profile-page">
+  <div class="profile-container">
+    <!-- Header -->
+    <div class="profile-header">
+      <div class="avatar-section">
+        <div class="avatar-large">
+          {{ auth.currentUser()?.name?.charAt(0) }}
+        </div>
+        <div class="avatar-info">
+          <h1>แก้ไขข้อมูลสมาชิก</h1>
+          <p>อัพเดตข้อมูลส่วนตัวของคุณ</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    @if (saveSuccess()) {
+      <div class="success-message">
+        ✅ บันทึกข้อมูลสำเร็จเรียบร้อยแล้ว!
+      </div>
+    }
+
+    <!-- Form -->
+    <form (ngSubmit)="onSave()" class="profile-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="profile-name">
+            <span class="label-icon">👤</span>
+            ชื่อ
+          </label>
+          <input
+            id="profile-name"
+            type="text"
+            placeholder="กรอกชื่อ"
+            [ngModel]="name()"
+            (ngModelChange)="name.set($event)"
+            name="name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="profile-email">
+            <span class="label-icon">✉️</span>
+            อีเมล
+          </label>
+          <input
+            id="profile-email"
+            type="email"
+            placeholder="กรอกอีเมล"
+            [ngModel]="email()"
+            (ngModelChange)="email.set($event)"
+            name="email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="profile-phone">
+            <span class="label-icon">📱</span>
+            เบอร์โทรศัพท์
+          </label>
+          <input
+            id="profile-phone"
+            type="tel"
+            placeholder="กรอกเบอร์โทรศัพท์"
+            [ngModel]="phone()"
+            (ngModelChange)="phone.set($event)"
+            name="phone"
+          />
+        </div>
+
+        <div class="form-group full-width">
+          <label for="profile-address">
+            <span class="label-icon">📍</span>
+            ที่อยู่
+          </label>
+          <textarea
+            id="profile-address"
+            placeholder="กรอกที่อยู่"
+            rows="3"
+            [ngModel]="address()"
+            (ngModelChange)="address.set($event)"
+            name="address"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-reset" (click)="onReset()">
+          ↩️ รีเซ็ต
+        </button>
+        <button type="submit" class="btn-save">
+          💾 บันทึกข้อมูล
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

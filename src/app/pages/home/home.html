@@ -1,0 +1,72 @@
+<div class="home">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+      <div class="hero-orb orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">✨ ยินดีต้อนรับสู่ MemberHub</div>
+      <h1 class="hero-title">
+        ระบบจัดการสมาชิก
+        <span class="gradient-text">อัจฉริยะ</span>
+      </h1>
+      <p class="hero-description">
+        แพลตฟอร์มบริหารจัดการข้อมูลสมาชิกที่ทันสมัย ปลอดภัย และใช้งานง่าย
+        พร้อมฟีเจอร์ครบครันสำหรับทุกความต้องการ
+      </p>
+      <div class="hero-actions">
+        @if (auth.isLoggedIn()) {
+          <a routerLink="/profile" class="btn-primary">
+            จัดการข้อมูลสมาชิก →
+          </a>
+        } @else {
+          <p class="hero-hint">
+            กรุณาเข้าสู่ระบบที่แถบด้านบนเพื่อเริ่มใช้งาน
+          </p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      @for (stat of stats; track stat.label) {
+        <div class="stat-card">
+          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="section-header">
+      <h2>ฟีเจอร์เด่น</h2>
+      <p>ทุกสิ่งที่คุณต้องการสำหรับการบริหารจัดการสมาชิก</p>
+    </div>
+    <div class="features-grid">
+      @for (feature of features; track feature.title) {
+        <div class="feature-card">
+          <div class="feature-icon">{{ feature.icon }}</div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo-icon">✦</span>
+        <span>MemberHub</span>
+      </div>
+      <p class="footer-text">© 2026 MemberHub. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
